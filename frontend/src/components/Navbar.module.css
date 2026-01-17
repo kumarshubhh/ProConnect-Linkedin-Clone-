@@ -1,0 +1,165 @@
+/* ===================================
+   MODERN NAVBAR - LINKEDIN STYLE
+   =================================== */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-bottom: 1px solid #E4E6EB;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    z-index: 100;
+    height: 64px;
+}
+
+.navbarContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.navbarLogo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.navbarLogo:hover {
+    opacity: 0.8;
+}
+
+.navbarLogo span {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1C1C1C;
+}
+
+/* Right Side */
+.navbarRight {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Profile Dropdown */
+.profileDropdown {
+    position: relative;
+}
+
+.profileTrigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.profileTrigger:hover {
+    background: #F3F2EF;
+}
+
+.profileImage {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #E4E6EB;
+}
+
+.profileName {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1C1C1C;
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdownIcon {
+    color: #5F5F5F;
+    transition: transform 0.2s ease;
+}
+
+.dropdownIconOpen {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.dropdownMenu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    min-width: 200px;
+    padding: 8px;
+    animation: slideDown 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #1C1C1C;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.dropdownItem:hover {
+    background: #F3F2EF;
+}
+
+.dropdownItem svg {
+    color: #5F5F5F;
+}
+
+.dropdownDivider {
+    height: 1px;
+    background: #E4E6EB;
+    margin: 8px 0;
+}
+
+/* Animations */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .navbarContainer {
+        padding: 0 16px;
+    }
+
+    .navbarLogo span {
+        display: none;
+    }
+
+    .profileName {
+        display: none;
+    }
+}

@@ -1,0 +1,355 @@
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    📁 PROCONNECT - COMPLETE FILE TREE                    │
+│                         LinkedIn Clone Project                           │
+└─────────────────────────────────────────────────────────────────────────┘
+
+LinkedIn/
+│
+├── 🔧 BACKEND/
+│   │
+│   ├── 📂 controllers/
+│   │   ├── 📄 user.controller.js          (13KB, 455 lines)
+│   │   │   ├── register()
+│   │   │   ├── login()
+│   │   │   ├── getUserAndProfile()
+│   │   │   ├── updateUserProfile()
+│   │   │   ├── updateProfileData()
+│   │   │   ├── uploadProfilePicture()
+│   │   │   ├── getAllUserProfile()
+│   │   │   ├── downloadProfile()
+│   │   │   ├── sendConnectionRequest()
+│   │   │   ├── getMyConnectionsRequests()
+│   │   │   ├── whatAreMyConnections()
+│   │   │   ├── acceptConnectionRequest()
+│   │   │   ├── getUserProfileAndUserBasedOnUsername()
+│   │   │   └── convertUserDataToPDF()
+│   │   │
+│   │   └── 📄 post.controller.js          (4.7KB)
+│   │       ├── createPost()
+│   │       ├── getAllPosts()
+│   │       ├── likePost()
+│   │       ├── commentPost()
+│   │       ├── getComments()
+│   │       └── sharePost()
+│   │
+│   ├── 📂 models/
+│   │   ├── 📄 user.model.js               (709 bytes)
+│   │   │   └── Schema: name, email, password, username, profilePicture, token
+│   │   │
+│   │   ├── 📄 profile.moddel.js           (989 bytes) ⚠️ TYPO
+│   │   │   └── Schema: userId, bio, currentPost, postWork[]
+│   │   │
+│   │   ├── 📄 post.model.js               (867 bytes)
+│   │   │   └── Schema: userId, content, image, likes[], shares
+│   │   │
+│   │   ├── 📄 comments.model.js           (412 bytes)
+│   │   │   └── Schema: userId, postId, body
+│   │   │
+│   │   └── 📄 connections.model.js        (451 bytes)
+│   │       └── Schema: userId, connectionId, status_accepted
+│   │
+│   ├── 📂 routes/
+│   │   ├── 📄 user.routes.js              (1.5KB)
+│   │   │   ├── POST   /register
+│   │   │   ├── POST   /login
+│   │   │   ├── POST   /user_update
+│   │   │   ├── GET    /get_user_and_profile
+│   │   │   ├── POST   /update_profile_data
+│   │   │   ├── POST   /update_profile_picture
+│   │   │   ├── GET    /user/get_all_users
+│   │   │   ├── GET    /user/download_resume
+│   │   │   ├── POST   /user/send_connection_request
+│   │   │   ├── GET    /user/getConnectionRequest
+│   │   │   ├── GET    /user/user_connection_request
+│   │   │   ├── POST   /user/accept_connection_request
+│   │   │   └── GET    /user/get_profile_based_on_username
+│   │   │
+│   │   ├── 📄 post.routes.js              (1KB)
+│   │   │   ├── POST   /create_post
+│   │   │   ├── GET    /get_all_posts
+│   │   │   ├── POST   /like_post
+│   │   │   ├── POST   /comment_post
+│   │   │   ├── GET    /get_comments
+│   │   │   └── POST   /share_post
+│   │   │
+│   │   └── 📄 api.http                    (133 bytes)
+│   │       └── API testing file
+│   │
+│   ├── 📂 uploads/                        (16 files)
+│   │   └── Profile pictures, PDFs, etc.
+│   │
+│   ├── 📂 node_modules/                   (Dependencies)
+│   │
+│   ├── 📄 server.js                       (1.6KB, 52 lines) ✅ UPDATED
+│   │   ├── Express setup
+│   │   ├── CORS configuration
+│   │   ├── MongoDB connection
+│   │   ├── Route mounting
+│   │   └── Dynamic PORT (Render compatible)
+│   │
+│   ├── 📄 package.json                    (611 bytes) ✅ UPDATED
+│   │   ├── Scripts: dev, start, prod
+│   │   └── Dependencies: express, mongoose, bcrypt, cors, multer, pdfkit
+│   │
+│   └── 📄 package-lock.json               (114KB)
+│
+│
+├── 🎨 FRONTEND/
+│   │
+│   ├── 📂 public/
+│   │   ├── 📂 images/
+│   │   │   └── 📄 10886321.jpg
+│   │   ├── 📄 favicon.ico
+│   │   ├── 📄 next.svg
+│   │   ├── 📄 vercel.svg
+│   │   ├── 📄 globe.svg
+│   │   ├── 📄 file.svg
+│   │   └── 📄 window.svg
+│   │
+│   ├── 📂 src/
+│   │   │
+│   │   ├── 📂 pages/                      (Next.js Routes)
+│   │   │   │
+│   │   │   ├── 📄 _app.js                 (847 bytes)
+│   │   │   │   └── Redux Provider, Global state
+│   │   │   │
+│   │   │   ├── 📄 _document.js            (233 bytes)
+│   │   │   │   └── HTML document structure
+│   │   │   │
+│   │   │   ├── 📄 index.jsx               (1KB)
+│   │   │   │   └── Route: / (Landing page)
+│   │   │   │
+│   │   │   ├── 📂 login/
+│   │   │   │   ├── 📄 index.jsx
+│   │   │   │   │   └── Route: /login (Auth page)
+│   │   │   │   └── 📄 style.module.css
+│   │   │   │
+│   │   │   ├── 📂 dashboard/
+│   │   │   │   ├── 📄 index.jsx
+│   │   │   │   │   └── Route: /dashboard (Main feed)
+│   │   │   │   └── 📄 style.module.css
+│   │   │   │
+│   │   │   ├── 📂 profile/
+│   │   │   │   ├── 📄 index.jsx
+│   │   │   │   │   └── Route: /profile (User profile)
+│   │   │   │   └── 📄 style.module.css
+│   │   │   │
+│   │   │   ├── 📂 view_profile/
+│   │   │   │   ├── 📄 [username].jsx
+│   │   │   │   │   └── Route: /view_profile/[username] (Dynamic)
+│   │   │   │   └── 📄 style.module.css
+│   │   │   │
+│   │   │   ├── 📂 Discover/
+│   │   │   │   ├── 📄 index.jsx
+│   │   │   │   │   └── Route: /Discover (Find users)
+│   │   │   │   └── 📄 style.module.css
+│   │   │   │
+│   │   │   ├── 📂 my_connections/
+│   │   │   │   ├── 📄 index.jsx
+│   │   │   │   │   └── Route: /my_connections (Connections)
+│   │   │   │   └── 📄 style.module.css
+│   │   │   │
+│   │   │   └── 📂 api/
+│   │   │       └── 📄 hello.js
+│   │   │
+│   │   ├── 📂 Componennts/                ⚠️ TYPO (should be Components)
+│   │   │   └── 📂 Navbar/
+│   │   │       ├── 📄 index.jsx           (2KB)
+│   │   │       │   └── Navigation component
+│   │   │       └── 📄 styles.module.css   (2.1KB)
+│   │   │
+│   │   ├── 📂 layout/
+│   │   │   ├── 📂 DashboardLayout/
+│   │   │   │   ├── 📄 index.jsx           (3.1KB)
+│   │   │   │   │   └── Dashboard wrapper
+│   │   │   │   └── 📄 index.module.css    (2.6KB)
+│   │   │   │
+│   │   │   ├── 📂 userLayout/
+│   │   │   │   └── 📄 index.jsx
+│   │   │   │       └── User layout wrapper
+│   │   │   │
+│   │   │   └── 📂 adminLayout/
+│   │   │       └── (Empty - for future use)
+│   │   │
+│   │   ├── 📂 config/
+│   │   │   │
+│   │   │   ├── 📄 index.jsx               (217 bytes)
+│   │   │   │   └── Config exports
+│   │   │   │
+│   │   │   └── 📂 redux/                  (State Management)
+│   │   │       │
+│   │   │       ├── 📄 store.js            (378 bytes)
+│   │   │       │   └── Redux store configuration
+│   │   │       │
+│   │   │       ├── 📂 action/
+│   │   │       │   ├── 📂 authAction/
+│   │   │       │   │   └── 📄 index.jsx
+│   │   │       │   │       ├── LOGIN_USER
+│   │   │       │   │       ├── REGISTER_USER
+│   │   │       │   │       ├── LOGOUT_USER
+│   │   │       │   │       └── GET_USER_PROFILE
+│   │   │       │   │
+│   │   │       │   └── 📂 postAction/
+│   │   │       │       └── 📄 index.jsx
+│   │   │       │           ├── CREATE_POST
+│   │   │       │           ├── GET_ALL_POSTS
+│   │   │       │           ├── LIKE_POST
+│   │   │       │           └── COMMENT_POST
+│   │   │       │
+│   │   │       ├── 📂 reducer/
+│   │   │       │   ├── 📂 authReducer/
+│   │   │       │   │   └── 📄 index.js
+│   │   │       │   │       └── State: user, token, isAuthenticated
+│   │   │       │   │
+│   │   │       │   └── 📂 postReducers/
+│   │   │       │       └── 📄 index.jsx
+│   │   │       │           └── State: posts[], loading, error
+│   │   │       │
+│   │   │       └── 📂 middleware/
+│   │   │           └── (Redux middleware)
+│   │   │
+│   │   └── 📂 styles/
+│   │       ├── 📄 globals.css
+│   │       │   └── Global styles
+│   │       └── 📄 Home.module.css
+│   │           └── Home page styles
+│   │
+│   ├── 📂 .next/                          (Build output)
+│   ├── 📂 node_modules/                   (Dependencies)
+│   │
+│   ├── 📄 .gitignore                      (480 bytes)
+│   ├── 📄 jsconfig.json                   (77 bytes)
+│   ├── 📄 next.config.mjs                 (118 bytes)
+│   ├── 📄 package.json                    (404 bytes)
+│   ├── 📄 package-lock.json               (43KB)
+│   └── 📄 README.md                       (1.8KB)
+│
+│
+├── 📂 .git/                               (Git repository)
+├── 📄 .gitignore                          (Git ignore rules)
+│
+└── 📄 PROJECT_STRUCTURE.md                ✅ NEW - Complete documentation
+
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           📊 STATISTICS                                  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  Backend Files:                                                          │
+│    ├── Controllers:        2 files  (17.7KB)                            │
+│    ├── Models:             5 files  (3.4KB)                             │
+│    ├── Routes:             3 files  (2.7KB)                             │
+│    ├── Main:               1 file   (1.6KB)                             │
+│    └── Total:              11 files (25.4KB)                            │
+│                                                                          │
+│  Frontend Files:                                                         │
+│    ├── Pages:              ~10 pages                                    │
+│    ├── Components:         1 component                                  │
+│    ├── Layouts:            2 layouts                                    │
+│    ├── Redux:              ~6 files                                     │
+│    └── Total:              ~29 source files                             │
+│                                                                          │
+│  Total Lines of Code:      ~2000+ lines                                 │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        🔗 API ENDPOINTS SUMMARY                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  USER & AUTH (13 endpoints):                                            │
+│    POST   /register                                                     │
+│    POST   /login                                                        │
+│    POST   /user_update                                                  │
+│    GET    /get_user_and_profile                                         │
+│    POST   /update_profile_data                                          │
+│    POST   /update_profile_picture                                       │
+│    GET    /user/get_all_users                                           │
+│    GET    /user/download_resume                                         │
+│    POST   /user/send_connection_request                                 │
+│    GET    /user/getConnectionRequest                                    │
+│    GET    /user/user_connection_request                                 │
+│    POST   /user/accept_connection_request                               │
+│    GET    /user/get_profile_based_on_username                           │
+│                                                                          │
+│  POSTS & FEED (6 endpoints):                                            │
+│    POST   /create_post                                                  │
+│    GET    /get_all_posts                                                │
+│    POST   /like_post                                                    │
+│    POST   /comment_post                                                 │
+│    GET    /get_comments                                                 │
+│    POST   /share_post                                                   │
+│                                                                          │
+│  TOTAL: 19 API endpoints                                                │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      🗄️ DATABASE COLLECTIONS                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  1. users                                                                │
+│     └── name, email, password, username, profilePicture, token          │
+│                                                                          │
+│  2. profiles                                                             │
+│     └── userId, bio, currentPost, postWork[]                            │
+│                                                                          │
+│  3. posts                                                                │
+│     └── userId, content, image, likes[], shares                         │
+│                                                                          │
+│  4. comments                                                             │
+│     └── userId, postId, body                                            │
+│                                                                          │
+│  5. connectionrequests                                                   │
+│     └── userId, connectionId, status_accepted                           │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       ⚠️ ISSUES FOUND & FIXED                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ✅ FIXED:                                                               │
+│    1. Missing 'start' script in package.json                            │
+│    2. Hardcoded port 9090 (now uses process.env.PORT)                   │
+│                                                                          │
+│  ⚠️ TO FIX:                                                              │
+│    1. Typo: profile.moddel.js → profile.model.js                        │
+│    2. Typo: Componennts → Components                                    │
+│    3. MongoDB credentials in server.js (use .env)                       │
+│    4. Token security (consider JWT)                                     │
+│    5. Add input validation                                              │
+│    6. Add rate limiting                                                 │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        🚀 DEPLOYMENT SETUP                               │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  Frontend (Vercel):                                                      │
+│    URL: https://pro-connect-linkedin-clone-eight.vercel.app            │
+│    Framework: Next.js                                                   │
+│    Auto-deploy: GitHub main branch                                      │
+│                                                                          │
+│  Backend (Render):                                                       │
+│    URL: https://proconnect-linkedin-clone.onrender.com                  │
+│    Framework: Express.js                                                │
+│    Auto-deploy: GitHub main branch                                      │
+│    Build: npm install                                                   │
+│    Start: npm start                                                     │
+│                                                                          │
+│  Database (MongoDB Atlas):                                               │
+│    Host: linkedin.xps8o.mongodb.net                                     │
+│    Type: Cloud-hosted MongoDB                                           │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+Created by: Shubhanshu Kumar
+Project: ProConnect - LinkedIn Clone
+Date: January 18, 2026

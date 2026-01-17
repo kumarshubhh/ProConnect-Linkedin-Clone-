@@ -1,107 +1,379 @@
+/* ===================================
+   LANDING PAGE - MODERN LINKEDIN STYLE
+   =================================== */
+
+/* Base Container */
 .container {
-  font-family: "Poppins", sans-serif;
-  padding: 2rem 1.5rem;
-  background: #f8f9fa;
+  min-height: 100vh;
+  background: #F3F2EF;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.mainContainer {
-  display: flex;
+.container.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero Section */
+.heroSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
   align-items: center;
-  justify-content: space-between;
-  gap: 4rem;
-  padding-inline: 2rem;
-  min-height: 80vh;
-  flex-wrap: wrap;
+  min-height: calc(100vh - 80px);
 }
 
-.mainContainer_left {
+/* Hero Content (Left) */
+.heroContent {
+  animation: slideInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.heroTitle {
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #1C1C1C;
+  margin: 0 0 24px 0;
+  letter-spacing: -0.02em;
+}
+
+.heroSubtitle {
+  font-size: 20px;
+  line-height: 1.6;
+  color: #5F5F5F;
+  margin: 0 0 40px 0;
+  font-weight: 400;
+  max-width: 480px;
+}
+
+/* CTA Buttons */
+.ctaGroup {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.primaryButton {
+  background: #0A66C2;
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(10, 102, 194, 0.2);
+}
+
+.primaryButton:hover {
+  background: #004182;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.3);
+}
+
+.primaryButton:active {
+  transform: translateY(0);
+}
+
+.secondaryButton {
+  background: transparent;
+  color: #0A66C2;
+  border: 1px solid #0A66C2;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.secondaryButton:hover {
+  background: rgba(10, 102, 194, 0.08);
+  border-color: #004182;
+  color: #004182;
+}
+
+/* Trust Indicators */
+.trustIndicators {
+  display: flex;
+  gap: 48px;
+}
+
+.trustItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.trustNumber {
+  font-size: 32px;
+  font-weight: 600;
+  color: #0A66C2;
+  line-height: 1;
+}
+
+.trustLabel {
+  font-size: 14px;
+  color: #5F5F5F;
+  font-weight: 400;
+}
+
+/* Hero Illustration (Right) */
+.heroIllustration {
+  position: relative;
+  animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.illustrationCard {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 2;
+}
+
+.cardHeader {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.cardAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0A66C2, #004182);
+  flex-shrink: 0;
+}
+
+.cardInfo {
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 8px;
   justify-content: center;
-  max-width: 600px;
 }
 
-.mainContainer_right {
+.cardLine {
+  height: 12px;
+  background: #E4E6EB;
+  border-radius: 6px;
+  width: 60%;
+}
+
+.cardLineSmall {
+  height: 10px;
+  background: #E4E6EB;
+  border-radius: 5px;
+  width: 40%;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cardBodyLine {
+  height: 10px;
+  background: #F3F2EF;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.cardBodyLineShort {
+  height: 10px;
+  background: #F3F2EF;
+  border-radius: 5px;
+  width: 70%;
+}
+
+.cardFooter {
+  display: flex;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #E4E6EB;
+}
+
+.cardAction {
+  height: 32px;
+  background: #F3F2EF;
+  border-radius: 16px;
   flex: 1;
+}
+
+/* Floating Elements */
+.floatingElement1,
+.floatingElement2 {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.floatingElement1 {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, rgba(10, 102, 194, 0.1), rgba(10, 102, 194, 0.05));
+  top: -40px;
+  right: -40px;
+  animation: float 6s ease-in-out infinite;
+}
+
+.floatingElement2 {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, rgba(10, 102, 194, 0.08), rgba(10, 102, 194, 0.03));
+  bottom: -20px;
+  left: -20px;
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+/* Features Section */
+.featuresSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.featureCard {
+  background: white;
+  padding: 32px;
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+}
+
+.featureCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-color: #E4E6EB;
+}
+
+.featureIcon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  background: rgba(10, 102, 194, 0.08);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.mainContainer_left > p:nth-child(1) {
-  font-size: 3rem;
-  font-weight: 700;
-  line-height: 1.2;
-  background: linear-gradient(45deg, #000000, #808080);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 0.75rem;
-}
-
-.mainContainer_left > p:nth-child(2) {
-  font-size: 1.4rem;
-  color: #444;
-  margin-bottom: 2rem;
-  max-width: 500px;
-}
-
-.buttonJoin {
-  width: fit-content;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.3s ease;
-  font-size: 1.2rem;
-  background-color: #0073b1;
-  color: white;
-  padding: 0.75rem 2rem;
-  border-radius: 25px;
+.featureTitle {
+  font-size: 20px;
   font-weight: 600;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  color: #1C1C1C;
+  margin: 0 0 12px 0;
 }
 
-.buttonJoin:hover {
-  background-color: #005582;
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+.featureDescription {
+  font-size: 15px;
+  color: #5F5F5F;
+  line-height: 1.5;
+  margin: 0;
 }
 
-.mainContainer_right img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-  object-fit: contain;
+/* Animations */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-/* ✅ Responsive Tweaks */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Responsive Design */
 @media (max-width: 992px) {
-  .mainContainer {
-    flex-direction: column;
-    text-align: center;
+  .heroSection {
+    grid-template-columns: 1fr;
+    gap: 60px;
+    padding: 60px 32px;
   }
 
-  .mainContainer_left,
-  .mainContainer_right {
-    flex: unset;
+  .heroTitle {
+    font-size: 42px;
+  }
+
+  .heroSubtitle {
+    font-size: 18px;
+  }
+
+  .featuresSection {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 60px 32px;
+  }
+
+  .trustIndicators {
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .heroSection {
+    padding: 40px 24px;
+  }
+
+  .heroTitle {
+    font-size: 36px;
+  }
+
+  .heroSubtitle {
+    font-size: 16px;
+  }
+
+  .ctaGroup {
+    flex-direction: column;
+  }
+
+  .primaryButton,
+  .secondaryButton {
     width: 100%;
   }
 
-  .mainContainer_left > p:nth-child(1) {
-    font-size: 2.4rem;
+  .trustIndicators {
+    flex-direction: column;
+    gap: 24px;
   }
 
-  .mainContainer_left > p:nth-child(2) {
-    font-size: 1.1rem;
-    margin: 0 auto 1.5rem;
-  }
-
-  .mainContainer_right img {
-    width: 80%;
-    margin-top: 2rem;
-  }
-
-  .buttonJoin {
-    margin: 0 auto;
+  .featuresSection {
+    padding: 40px 24px;
   }
 }

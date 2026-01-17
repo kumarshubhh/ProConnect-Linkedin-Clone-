@@ -1,0 +1,121 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    🚀 ENVIRONMENT VARIABLES QUICK REFERENCE                 ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 📦 BACKEND ENVIRONMENT VARIABLES                                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  File: backend/.env                                                          │
+│                                                                              │
+│  PORT=9090                                                                   │
+│  NODE_ENV=development                                                        │
+│  MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/db         │
+│  ALLOWED_ORIGINS=http://localhost:3000,https://your-app.vercel.app          │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 🎨 FRONTEND ENVIRONMENT VARIABLES                                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  Development (frontend/.env.local):                                          │
+│  ────────────────────────────────────                                        │
+│  NEXT_PUBLIC_API_BASE_URL=http://localhost:9090                             │
+│  NEXT_PUBLIC_ENV=development                                                 │
+│                                                                              │
+│  Production (frontend/.env.production):                                      │
+│  ───────────────────────────────────────                                     │
+│  NEXT_PUBLIC_API_BASE_URL=https://proconnect-linkedin-clone.onrender.com    │
+│  NEXT_PUBLIC_ENV=production                                                  │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 🔧 USAGE IN CODE                                                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  Backend:                                                                    │
+│  ────────                                                                    │
+│  const PORT = process.env.PORT || 9090;                                     │
+│  const MONGODB_URI = process.env.MONGODB_URI;                               │
+│  const origins = process.env.ALLOWED_ORIGINS.split(',');                    │
+│                                                                              │
+│  Frontend:                                                                   │
+│  ─────────                                                                   │
+│  import { clientServer } from '@/config';                                   │
+│  const response = await clientServer.post('/login', data);                  │
+│  // Automatically uses correct URL based on environment                     │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 🚀 DEPLOYMENT CHECKLIST                                                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  Render (Backend):                                                           │
+│  ─────────────────                                                           │
+│  [ ] Add PORT environment variable                                          │
+│  [ ] Add MONGODB_URI environment variable                                   │
+│  [ ] Add ALLOWED_ORIGINS environment variable                               │
+│  [ ] Add NODE_ENV=production                                                 │
+│  [ ] Deploy from GitHub                                                      │
+│                                                                              │
+│  Vercel (Frontend):                                                          │
+│  ──────────────────                                                          │
+│  [ ] Add NEXT_PUBLIC_API_BASE_URL environment variable                      │
+│  [ ] Add NEXT_PUBLIC_ENV=production                                          │
+│  [ ] Deploy from GitHub                                                      │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ⚡ QUICK COMMANDS                                                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  Verify Setup:                                                               │
+│  ./verify-env.sh                                                             │
+│                                                                              │
+│  Start Development:                                                          │
+│  cd backend && npm run dev                                                   │
+│  cd frontend && npm run dev                                                  │
+│                                                                              │
+│  Build for Production:                                                       │
+│  cd backend && npm start                                                     │
+│  cd frontend && npm run build && npm start                                   │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 🔍 TROUBLESHOOTING                                                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  Issue: API calls failing                                                    │
+│  Solution: Check NEXT_PUBLIC_API_BASE_URL is set correctly                  │
+│                                                                              │
+│  Issue: CORS errors                                                          │
+│  Solution: Add your frontend URL to ALLOWED_ORIGINS                         │
+│                                                                              │
+│  Issue: Env vars not updating                                                │
+│  Solution: Restart dev server (Ctrl+C, then npm run dev)                    │
+│                                                                              │
+│  Issue: MongoDB connection failed                                            │
+│  Solution: Check MONGODB_URI is correct in .env                             │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 📚 DOCUMENTATION                                                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  ENV_SETUP_GUIDE.md          - Complete setup guide                         │
+│  REFACTORING_SUMMARY.md      - Technical details                            │
+│  FINAL_IMPLEMENTATION_REPORT.md - Full report                               │
+│  PROJECT_STRUCTURE.md        - Project overview                             │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║  ✅ All environment variables are now configured!                           ║
+║  🚀 Ready for development and production deployment!                        ║
+╚════════════════════════════════════════════════════════════════════════════╝

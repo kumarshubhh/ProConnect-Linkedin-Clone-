@@ -9,19 +9,15 @@ dotenv.config();
 
 const app = express();
 
-const allowedOrigins = [
-  'http://localhost:3000',
-  'https://pro-connect-linkedin-clone-cb1jrssvq-kumarshubhhs-projects.vercel.app',
-  'https://pro-connect-linkedin-clone-eight.vercel.app',
-  'https://pro-connect-linkedin-clone-gwwl3ef39-kumarshubhhs-projects.vercel.app',
-  'https://pro-connect-linkedin-clone-dljuyh3vn-kumarshubhhs-projects.vercel.app',
-   'https://pro-connect-linkedin-clone-g5b9joo56-kumarshubhhs-projects.vercel.app',
-   'https://pro-connect-linkedin-clone-iqk7c7d9b-kumarshubhhs-projects.vercel.app',
-   'https://pro-connect-linkedin-clone-jf149fsu4-kumarshubhhs-projects.vercel.app'
-];
+// ✅ Get allowed origins from environment variable
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+  : ['http://localhost:3000'];
 
+// ✅ CORS Configuration
 app.use(cors({
   origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, Postman, etc.)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -34,19 +30,33 @@ app.use(cors({
 
 app.options('*', cors());
 
+// ✅ Middleware
 app.use(express.json());
 app.use(postRoutes);
 app.use(userRoutes);
 app.use(express.static('uploads'));
 
+// ✅ Database Connection & Server Start
 const start = async () => {
-  const connectDB = await mongoose.connect("mongodb+srv://subhanshukumar290:Shubh@linkedin.xps8o.mongodb.net/?retryWrites=true&w=majority&appName=Linkedin");
-  console.log("✅ Connected to MongoDB");
+  try {
+    // ✅ Use MongoDB URI from environment variable
+    const MONGODB_URI = process.env.MONGODB_URI;
 
-  const PORT = process.env.PORT || 9090;
-  app.listen(PORT, () => {
-    console.log(`🚀 Server is running on port ${PORT}`);
-  });
+    if (!MONGODB_URI) {
+      throw new Error('❌ MONGODB_URI is not defined in environment variables');
+    }
+
+    await mongoose.connect(MONGODB_URI);
+    console.log("✅ Connected to MongoDB");
+
+    const PORT = process.env.PORT || 9090;
+    app.listen(PORT, () => {
+      console.log(`🚀 Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('❌ Failed to start server:', error.message);
+    process.exit(1);
+  }
 };
 
 start();

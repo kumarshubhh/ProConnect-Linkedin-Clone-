@@ -1,4 +1,4 @@
-import Navbar from '@/Componennts/Navbar'
+import Navbar from '@/components/Navbar'
 import React from 'react'
 
 const UserLayout = ({children}) => {

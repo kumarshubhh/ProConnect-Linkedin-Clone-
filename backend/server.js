@@ -43,8 +43,9 @@ const start = async () => {
   const connectDB = await mongoose.connect("mongodb+srv://subhanshukumar290:Shubh@linkedin.xps8o.mongodb.net/?retryWrites=true&w=majority&appName=Linkedin");
   console.log("✅ Connected to MongoDB");
 
-  app.listen(9090, () => {
-    console.log("🚀 Server is running on port 9090");
+  const PORT = process.env.PORT || 9090;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server is running on port ${PORT}`);
   });
 };
 

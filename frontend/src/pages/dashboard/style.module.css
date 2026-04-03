@@ -14,23 +14,179 @@
 }
 
 /* ===================================
-   CREATE POST SECTION
+   CREATE POST — LinkedIn-style composer
    =================================== */
 
-.createPostContainer {
-  background: white;
+.composerCard {
+  background: #ffffff;
   border-radius: 12px;
-  padding: 16px 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 2px 12px rgba(0, 0, 0, 0.06);
   margin-bottom: 16px;
-  transition: box-shadow 0.2s ease;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.createPostContainer:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+.composerCard:focus-within {
+  border-color: #b0b0b0;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.composerTop {
+  display: flex;
+  gap: 12px;
+  padding: 16px 16px 12px;
+  align-items: flex-start;
+}
+
+.composerMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.composerTextarea {
+  width: 100%;
+  border: none;
+  resize: none;
+  min-height: 52px;
+  max-height: 140px;
+  font-size: 14px;
+  line-height: 1.45;
+  font-family: inherit;
+  color: #1d2226;
+  background: transparent;
+  padding: 4px 0;
+}
+
+.composerTextarea::placeholder {
+  color: #666f7b;
+}
+
+.composerTextarea:focus {
+  outline: none;
+}
+
+.previewWrap {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  max-height: 280px;
+  background: #f3f2ef;
+}
+
+.previewImg {
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+  object-fit: contain;
+  display: block;
+  vertical-align: middle;
+}
+
+.previewRemove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.previewRemove:hover {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.composerDivider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 0 16px;
+}
+
+.composerToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 12px;
+  gap: 12px;
+}
+
+.mediaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #666f7b;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mediaBtn:hover {
+  background: #f3f2ef;
+  color: #0a66c2;
+}
+
+.mediaBtn svg {
+  width: 22px;
+  height: 22px;
+  color: #666f7b;
+}
+
+.mediaBtn:hover svg {
+  color: #0a66c2;
+}
+
+.hiddenFile {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.postBtnPrimary {
+  min-width: 72px;
+  padding: 8px 20px;
+  border-radius: 24px;
+  border: none;
+  background: #0a66c2;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
+}
+
+.postBtnPrimary:hover:not(:disabled) {
+  background: #004182;
+}
+
+.postBtnPrimary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.postBtnPrimary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .userProfile {
@@ -42,75 +198,6 @@
   flex-shrink: 0;
 }
 
-.textarea {
-  flex: 1;
-  border: 1px solid #E4E6EB;
-  border-radius: 24px;
-  padding: 12px 20px;
-  font-size: 14px;
-  font-family: inherit;
-  resize: none;
-  min-height: 48px;
-  max-height: 120px;
-  transition: all 0.2s ease;
-  color: #1C1C1C;
-}
-
-.textarea::placeholder {
-  color: #9CA3AF;
-}
-
-.textarea:focus {
-  outline: none;
-  border-color: #0A66C2;
-  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
-}
-
-.Fab {
-  width: 40px;
-  height: 40px;
-  background: rgba(10, 102, 194, 0.08);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #0A66C2;
-}
-
-.Fab svg {
-  width: 20px;
-  height: 20px;
-}
-
-.Fab:hover {
-  background: rgba(10, 102, 194, 0.15);
-  transform: scale(1.05);
-}
-
-.uploadButton {
-  background: #0A66C2;
-  color: white;
-  padding: 10px 24px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: none;
-}
-
-.uploadButton:hover {
-  background: #004182;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(10, 102, 194, 0.3);
-}
-
-.uploadButton:active {
-  transform: translateY(0);
-}
-
 /* ===================================
    POST FEED CONTAINER
    =================================== */
@@ -118,265 +205,717 @@
 .postContainer {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
-
-/* ===================================
-   SINGLE POST CARD
-   =================================== */
-
-.SingleCard {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.SingleCard:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-  transform: translateY(-2px);
-}
-
-.SingleCard_profile {
-  display: flex;
   gap: 12px;
-  margin-bottom: 16px;
 }
 
-.SingleCard_profile img {
+/* Feed post — LinkedIn-style (media is NOT inside header; image stays rectangular) */
+.feedPost {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  padding: 12px 16px 0;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.feedPost:hover {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.postHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.postAvatar {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #E4E6EB;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
 }
 
-.SingleCard_profile>div {
+.postHeaderText {
   flex: 1;
+  min-width: 0;
 }
 
-.SingleCard_profile p:first-child {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1C1C1C;
-  margin: 0 0 4px 0;
-}
-
-.SingleCard_profile p:nth-child(2) {
-  font-size: 13px;
-  color: #5F5F5F;
-  margin: 0 0 12px 0;
-}
-
-.SingleCard_profile p:last-child {
-  font-size: 14px;
-  color: #1C1C1C;
-  line-height: 1.6;
-  margin: 0;
-}
-
-.SingleCard_image {
-  margin: 16px 0;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.SingleCard_image img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-  max-height: 500px;
-}
-
-/* ===================================
-   POST ACTIONS (LIKE, COMMENT, SHARE)
-   =================================== */
-
-.optionsContainer {
+.postAuthorLine {
   display: flex;
-  gap: 8px;
-  padding-top: 12px;
-  border-top: 1px solid #E4E6EB;
-  margin-top: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 6px;
 }
 
-.single_optionContainer {
-  flex: 1;
+.postAuthorName {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1d2226;
+  line-height: 1.3;
+}
+
+.postMetaDot {
+  color: #6b7280;
+  font-size: 12px;
+  user-select: none;
+}
+
+.postTime {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.postHeadline {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.35;
+}
+
+.postMenu {
+  position: relative;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.postMenuTrigger {
+  list-style: none;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #5F5F5F;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 20px;
+  line-height: 1;
+  color: #666f7b;
+  user-select: none;
+  transition: background 0.15s ease;
 }
 
-.single_optionContainer svg {
+.postMenuTrigger::-webkit-details-marker {
+  display: none;
+}
+
+.postMenuTrigger:hover {
+  background: #f3f2ef;
+  color: #1d2226;
+}
+
+.postMenuDropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  min-width: 160px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: 4px;
+  z-index: 5;
+}
+
+.postMenuItem {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: #b24020;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.postMenuItem:hover {
+  background: #fef2f2;
+}
+
+.postText {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1d2226;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.postMedia {
+  margin: 0 -16px 0;
+  background: #f3f2ef;
+  border-top: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.postMediaImg {
+  display: block;
+  width: 100%;
+  max-height: min(520px, 70vh);
+  height: auto;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* Engagement — reactions summary + actions (LinkedIn-style) */
+.postEngagement {
+  margin-top: 2px;
+}
+
+.postEngagementStats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0 8px;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.postEngagementLeft {
+  flex: 1;
+  min-width: 0;
+}
+
+.postStatsCommentsLink {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666f7b;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.postStatsCommentsLink:hover {
+  color: #0a66c2;
+  text-decoration: underline;
+}
+
+.postReactionsLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.reactionIconStack {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.reactionBubbleLike {
+  display: flex;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.reactionBubbleLike svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.postReactionSummaryText {
+  font-size: 12px;
+  line-height: 1.35;
+  color: #666f7b;
+  cursor: default;
+}
+
+.postActionsRow {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 2px;
+  padding: 2px 0 6px;
+  margin-top: 0;
+}
+
+.postActionsRowSolo {
+  border-top: 1px solid #ebebeb;
+  padding-top: 4px;
+  margin-top: 2px;
+}
+
+.postActionsRowAfterStats {
+  border-top: none;
+  padding-top: 2px;
+}
+
+.postActionBtn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 4px;
+  min-height: 44px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #666f7b;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.postActionBtn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.postActionBtn:hover:not(:disabled) {
+  background: #f3f2ef;
+  color: #1d2226;
+}
+
+.postActionBtn:disabled {
+  cursor: wait;
+  opacity: 0.85;
+}
+
+.postActionBtnActive {
+  color: #0a66c2;
+}
+
+.postActionBtnActive:hover:not(:disabled) {
+  color: #004182;
+  background: #e8f3fc;
+}
+
+.postActionBtnBusy {
+  pointer-events: none;
+}
+
+.postLikeSpinner {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border: 2px solid rgba(10, 102, 194, 0.2);
+  border-top-color: #0a66c2;
+  border-radius: 50%;
+  animation: feedLikeSpin 0.65s linear infinite;
+}
+
+@keyframes feedLikeSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===================================
+   COMMENT MODAL — LinkedIn-style
+   =================================== */
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.commentModalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.2s ease;
+}
+
+@media (min-width: 640px) {
+  .commentModalOverlay {
+    align-items: center;
+    padding: 24px 16px;
+  }
+}
+
+.commentModalPanel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 552px;
+  max-height: min(90vh, 720px);
+  background: #fff;
+  border-radius: 12px 12px 0 0;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 -4px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  animation: slideUp 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 640px) {
+  .commentModalPanel {
+    border-radius: 12px;
+    max-height: min(85vh, 680px);
+  }
+}
+
+.commentModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #ebebeb;
+  flex-shrink: 0;
+  background: #fff;
+}
+
+.commentModalTitle {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: #1d2226;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.commentModalCount {
+  font-size: 13px;
+  font-weight: 600;
+  color: #666f7b;
+  background: #f3f2ef;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.commentModalClose {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #666f7b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.commentModalClose:hover {
+  background: #f3f2ef;
+  color: #1d2226;
+}
+
+.commentModalClose svg {
   width: 20px;
   height: 20px;
 }
 
-.single_optionContainer:hover {
-  background: #F3F2EF;
-  color: #1C1C1C;
+.commentModalBody {
+  flex: 1;
+  min-height: 120px;
+  overflow-y: auto;
+  padding: 8px 12px 16px;
+  -webkit-overflow-scrolling: touch;
 }
 
-.single_optionContainer.liked {
-  background: rgba(10, 102, 194, 0.08);
-  color: #0A66C2;
-}
-
-/* ===================================
-   COMMENT MODAL
-   =================================== */
-
-.commentContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+.commentEmpty {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  padding: 20px;
-  animation: fadeIn 0.2s ease;
+  text-align: center;
+  padding: 40px 20px 48px;
+  color: #666f7b;
 }
 
-.allCommnetsContainer {
-  background: white;
-  border-radius: 16px;
-  max-width: 600px;
+.commentEmptyIcon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  color: #c4c4c4;
+}
+
+.commentEmptyIcon svg {
   width: 100%;
-  max-height: 80vh;
-  overflow-y: auto;
-  padding: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
 }
 
-.allCommnetsContainer h2 {
-  font-size: 20px;
+.commentEmptyTitle {
+  margin: 0 0 6px;
+  font-size: 16px;
   font-weight: 600;
-  color: #1C1C1C;
-  margin: 0 0 20px 0;
+  color: #1d2226;
 }
 
-.single_comment {
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  background: #F3F2EF;
-  position: relative;
-  transition: all 0.2s ease;
+.commentEmptyHint {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  max-width: 260px;
 }
 
-.single_comment:hover {
-  background: #E4E6EB;
+.commentThread {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.singlecomment_profileContainer {
+.commentRow {
   display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 12px;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 4px;
 }
 
-.singlecomment_profileContainer img {
+.commentAvatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid white;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-.singlecomment_profileContainer div p:first-child {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1C1C1C;
-  margin: 0;
-}
-
-.singlecomment_profileContainer div p:last-child {
-  font-size: 12px;
-  color: #5F5F5F;
-  margin: 0;
-}
-
-.single_comment>p {
-  font-size: 14px;
-  color: #1C1C1C;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.deleteIcon {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: background 0.2s ease;
-}
-
-.deleteIcon:hover {
-  background: rgba(220, 38, 38, 0.1);
-}
-
-.postCommentContainer {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid #E4E6EB;
-}
-
-.postCommentContainer input {
+.commentBubbleWrap {
   flex: 1;
-  border: 1px solid #E4E6EB;
-  border-radius: 24px;
-  padding: 12px 20px;
+  min-width: 0;
+}
+
+.commentBubble {
+  background: #f2f2f2;
+  border-radius: 0 12px 12px 12px;
+  padding: 8px 12px 10px;
+  position: relative;
+  transition: background 0.15s ease;
+}
+
+.commentRow:hover .commentBubble {
+  background: #ebebeb;
+}
+
+.commentBubbleTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.commentBubbleMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.commentAuthor {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d2226;
+}
+
+.commentMetaSep {
+  color: #666f7b;
+  font-size: 12px;
+  user-select: none;
+}
+
+.commentTime {
+  font-size: 12px;
+  color: #666f7b;
+}
+
+.commentSubline {
+  margin: 0 0 4px;
+  font-size: 11px;
+  color: #666f7b;
+  line-height: 1.3;
+}
+
+.commentBody {
+  margin: 0;
   font-size: 14px;
+  line-height: 1.45;
+  color: #1d2226;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.commentItemMenu {
+  position: relative;
+  flex-shrink: 0;
+  margin: -4px -4px 0 0;
+}
+
+.commentItemMenu summary {
+  list-style: none;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  color: #666f7b;
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+.commentItemMenu summary::-webkit-details-marker {
+  display: none;
+}
+
+.commentItemMenu summary:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1d2226;
+}
+
+.commentItemMenuDrop {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  min-width: 120px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: 4px;
+  z-index: 2;
+}
+
+.commentItemMenuDelete {
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #b24020;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.commentItemMenuDelete:hover {
+  background: #fef2f2;
+}
+
+.commentComposer {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  padding: 12px 16px 16px;
+  border-top: 1px solid #ebebeb;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.commentComposerAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.commentComposerInner {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.commentComposerInput {
+  width: 100%;
+  min-height: 44px;
+  max-height: 160px;
+  resize: vertical;
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1.45;
   font-family: inherit;
-  transition: all 0.2s ease;
+  color: #1d2226;
+  border: 1px solid #8c8c8c;
+  border-radius: 24px;
+  background: #fff;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-.postCommentContainer input:focus {
+.commentComposerInput::placeholder {
+  color: #666f7b;
+}
+
+.commentComposerInput:focus {
   outline: none;
-  border-color: #0A66C2;
-  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
+  border-color: #0a66c2;
+  box-shadow: 0 0 0 1px #0a66c2;
 }
 
-.postCommentContainer_comment {
-  background: #0A66C2;
-  color: white;
-  padding: 12px 24px;
+.commentComposerBar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.commentComposerSubmit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 72px;
+  padding: 8px 18px;
+  border: none;
   border-radius: 24px;
   font-size: 14px;
   font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #0a66c2;
   cursor: pointer;
-  transition: all 0.2s ease;
-  border: none;
-  white-space: nowrap;
+  transition: background 0.15s ease, opacity 0.15s ease;
 }
 
-.postCommentContainer_comment:hover {
+.commentComposerSubmit:hover:not(:disabled) {
   background: #004182;
-  transform: translateY(-1px);
 }
 
-.postCommentContainer_comment p {
-  margin: 0;
+.commentComposerSubmit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.commentComposerSpinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: feedLikeSpin 0.65s linear infinite;
 }
 
 /* ===================================
@@ -483,17 +1022,49 @@
    =================================== */
 
 @media (max-width: 640px) {
-  .createPostContainer {
-    padding: 12px 16px;
+  .composerTop {
+    padding: 12px;
   }
 
-  .SingleCard {
-    padding: 16px;
+  .composerToolbar {
+    padding: 8px 10px 10px;
   }
 
-  .allCommnetsContainer {
-    padding: 20px 16px;
-    max-height: 90vh;
+  .feedPost {
+    padding: 10px 12px 0;
+  }
+
+  .postMedia {
+    margin: 0 -12px 0;
+  }
+
+  .postActionBtn {
+    font-size: 12px;
+    padding: 8px 4px;
+  }
+
+  .postActionBtn span:first-of-type {
+    display: none;
+  }
+
+  .postActionBtn svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .commentModalPanel {
+    max-height: 92vh;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .commentModalBody {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .commentComposer {
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
   .modalContent {

@@ -19,6 +19,17 @@ export const API_CONFIG = {
     },
 };
 
+/**
+ * Resolve stored media path: full Cloudinary/CDN URL, or legacy filename served from API origin.
+ */
+export function mediaUrl(stored) {
+    if (!stored) return '';
+    const s = String(stored).trim();
+    if (/^https?:\/\//i.test(s)) return s;
+    const base = (API_BASE_URL || '').replace(/\/$/, '');
+    return `${base}/${s.replace(/^\//, '')}`;
+}
+
 // ✅ Export individual values
 export { API_BASE_URL, ENV };
 

@@ -30,13 +30,11 @@ export const createPost = createAsyncThunk("post/createPost", async (userData, t
         const fromData = new FormData();
         fromData.append("token", localStorage.getItem("token"))
         fromData.append("body", body)
-        fromData.append("media", file)
+        if (file) {
+            fromData.append("media", file)
+        }
 
-        const response = await clientServer.post('/post', fromData, {
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
-        })
+        const response = await clientServer.post('/post', fromData)
         if(response.status ===200){
             return thunkAPI.fulfillWithValue("Post Uploaded Successfully")
         }else{
@@ -45,8 +43,12 @@ export const createPost = createAsyncThunk("post/createPost", async (userData, t
 
         
     } catch (error) {
-        return thunkAPI.rejectWithValue(error.response.data)
-        
+        const data = error.response?.data;
+        const msg =
+            typeof data === 'string'
+                ? data
+                : data?.message || error.message || 'Post failed';
+        return thunkAPI.rejectWithValue(msg);
     }
 
 }
@@ -74,18 +76,22 @@ export const deletePost = createAsyncThunk("post/deletePost", async (postId, thu
 
 export const togglePostLike = createAsyncThunk(
     "post/toggleLike",
-    async ({ post_id, user_id }, thunkAPI) => {
+    async ({ post_id }, thunkAPI) => {
         try {
             const response = await clientServer.post('/increment_post_like', {
                 post_id,
-                user_id,
+                token: localStorage.getItem("token"),
             });
 
             if (response.status === 200) {
+                const d = response.data;
                 return thunkAPI.fulfillWithValue({
-                    message: response.data.message,
-                    likesCount: response.data.likes,
+                    message: d.message,
+                    likesCount: d.likes,
                     post_id,
+                    liked: d.liked,
+                    likedByUsers: d.likedByUsers,
+                    likedByPreview: d.likedByPreview,
                 });
             } else {
                 return thunkAPI.rejectWithValue("Post Like/Unlike Failed");
@@ -136,7 +142,10 @@ export const postComment = createAsyncThunk("post/postComment", async (commentDa
         });
 
         if (response.status === 200) {
-            return thunkAPI.fulfillWithValue("Comment Posted Successfully", response.data);
+            return thunkAPI.fulfillWithValue({
+                message: "Comment Posted Successfully",
+                data: response.data,
+            });
         } else {
             return thunkAPI.rejectWithValue("Comment Posting Failed");
         }

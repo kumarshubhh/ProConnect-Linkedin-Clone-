@@ -3,7 +3,7 @@
  * Centralized Axios instance with interceptors for requests and responses
  */
 
-import axios from 'axios';
+import axios, { AxiosHeaders } from 'axios';
 import { API_BASE_URL } from './api';
 
 // ✅ Create Axios instance with base configuration
@@ -19,6 +19,16 @@ const axiosInstance = axios.create({
 // ✅ Request Interceptor
 axiosInstance.interceptors.request.use(
     (config) => {
+        // FormData must not use default application/json or a manual multipart type without boundary —
+        // otherwise the server never receives the file (req.file stays undefined).
+        const isFormData =
+            typeof FormData !== 'undefined' && config.data instanceof FormData;
+        if (isFormData) {
+            const h = AxiosHeaders.from(config.headers);
+            h.delete('Content-Type');
+            config.headers = h;
+        }
+
         // Get token from localStorage if available
         if (typeof window !== 'undefined') {
             const token = localStorage.getItem('token');

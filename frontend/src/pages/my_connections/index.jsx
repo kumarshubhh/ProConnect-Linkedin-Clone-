@@ -4,7 +4,7 @@ import UserLayout from '@/layout/userLayout'
 import React, { use, useEffect } from 'react'
 import { connect, useDispatch, useSelector } from 'react-redux';
 import style from './style.module.css'
-import { BASE_URL } from '@/config';
+import { mediaUrl } from '@/config';
 import { useRouter } from 'next/router';
 
 export default function  MyConnections() {
@@ -47,7 +47,7 @@ if(authState.connectionRequests.length !=0){
     key={index}  className={style.userCard}  >
       <div style={{display:"flex", alignItems:"center", gap:"1.3rem"}}  >
         <div className={style.profilePicture} >
-          <img src={`${BASE_URL}/${user.userId.profilePicture}`} alt={user.name} />
+          <img src={mediaUrl(user.userId.profilePicture)} alt={user.name} />
 
         </div>
 
@@ -85,7 +85,7 @@ if(authState.connectionRequests.length !=0){
   key={index}  className={style.userCard}  >
     <div style={{display:"flex", alignItems:"center", gap:"1.3rem"}}  >
       <div className={style.profilePicture} >
-        <img src={`${BASE_URL}/${user.userId.profilePicture}`} alt={user.name} />
+        <img src={mediaUrl(user.userId.profilePicture)} alt={user.name} />
 
       </div>
 

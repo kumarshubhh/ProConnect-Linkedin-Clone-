@@ -1,111 +1,100 @@
-.container {
-    padding: 1.5rem;
-    background-color: #fdfdfd;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    font-family: 'Segoe UI', sans-serif;
+/* View profile — extras (layout uses ../profile/style.module.css) */
+
+.viewTopBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  margin-top: 4px;
 }
 
-.backDropContainer {
-    width: 100%;
-    height: 30vh;
-    background: url('https://i.pinimg.com/736x/af/61/ad/af61ad0ba5372bf2f08fc9bab2314fed.jpg') no-repeat center center;
-    background-size: cover;
-    position: relative;
-    border-radius: 20px;
+.selfNotice {
+  width: 100%;
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #e8f3fc;
+  border: 1px solid rgba(10, 102, 194, 0.25);
+  font-size: 14px;
+  color: #1d2226;
 }
 
-.backDropContainer img {
-    width: 10em;
-    height: 10em;
-    object-fit: cover;
-    border-radius: 50%;
-    position: absolute;
-    bottom: -30%;
-    left: 2rem;
-    border: 2px solid #0a66c2;
-    background-color: white;
-    transition: transform 0.3s ease;
+.selfNotice a {
+  color: #0a66c2;
+  font-weight: 600;
+  text-decoration: none;
 }
 
-.backDropContainer img:hover {
-    transform: scale(1.03);
+.selfNotice a:hover {
+  text-decoration: underline;
 }
 
-.profileContainer_details {
-    padding-top: 6.6rem;
+.connectRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
 }
 
-.card {
-    display: flex;
-    align-items: center;
-    gap: 1.4rem;
-    background-color: white;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+.btnResume {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: 24px;
+  border: 1.5px solid #666f7b;
+  background: #fff;
+  color: #1d2226;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
 
-.card_profileContainer > img {
-    width: 3.4rem;
-    height: 3.4rem;
-    object-fit: cover;
-    border-radius: 10%;
+.btnResume:hover {
+  background: #f3f2ef;
+  border-color: #1d2226;
 }
 
-.connectedBotton,
-.connectedBtn {
-    padding: 0.4rem 0.8rem;
-    background-color: #035db7;
-    color: white;
-    border: none;
-    border-radius: 0.4rem;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+.btnResume svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
-.connectedBtn {
-    border: 1px solid #035db7;
-    background-color: transparent;
-    color: #035db7;
+.btnResume:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.connectedBotton:hover {
-    background-color: #004a94;
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 20px;
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid #666f7b;
+  color: #666f7b;
+  background: #fff;
+  cursor: default;
 }
 
-.connectedBtn:hover {
-    background-color: #035db7;
-    color: white;
+.statusPillConnected {
+  border-color: #057642;
+  color: #057642;
+  background: rgba(5, 118, 66, 0.06);
 }
 
-.workHistoryContainer {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.workHistoryCard {
-    padding: 1rem 2.5rem;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0px 0px 15px rgba(173, 173, 173, 0.2);
-    min-width: fit-content;
-}
-
-.profileContainer_flex{
-    display:flex;
-     gap:0.2rem
-}
-
-@media only screen and (max-width: 600px) {
-   .profileContainer_flex{
-    flex-direction: column;
-    gap: 2rem;
-
-   }
-    
+.statusPillPending {
+  border-color: #915907;
+  color: #915907;
+  background: rgba(145, 89, 7, 0.08);
 }

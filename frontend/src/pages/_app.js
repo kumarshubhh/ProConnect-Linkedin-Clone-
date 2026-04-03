@@ -1,8 +1,13 @@
 import "@/styles/globals.css";
 import { Provider } from "react-redux";
-import { store } from "@/config/redux/store"; 
-import { ToastContainer } from "react-toastify";    // <-- Import ToastContainer
-import "react-toastify/dist/ReactToastify.css";      // <-- Import Toast styles
+import { store } from "@/config/redux/store";
+import dynamic from "next/dynamic";
+import "react-toastify/dist/ReactToastify.css";
+
+const ToastContainer = dynamic(
+  () => import("react-toastify").then((mod) => mod.ToastContainer),
+  { ssr: false }
+);
 
 export default function App({ Component, pageProps }) {
   return (
@@ -10,8 +15,8 @@ export default function App({ Component, pageProps }) {
       <>
         <Component {...pageProps} />
         <ToastContainer
-          position="top-center"    // Toast ki position
-          autoClose={2000}          // 2 second me khud close ho jaaye
+          position="top-center"
+          autoClose={2000}
           hideProgressBar={false}
           newestOnTop
           closeOnClick
@@ -19,7 +24,7 @@ export default function App({ Component, pageProps }) {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="light"             // Light ya dark theme
+          theme="light"
         />
       </>
     </Provider>

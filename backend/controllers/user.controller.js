@@ -2,12 +2,12 @@ import User from "../models/user.model.js"
 import bcrypt from 'bcrypt'
 import Profile from '../models/profile.moddel.js'
 import crypto from 'crypto'
-import exp from "constants"
 import PDFDocument from 'pdfkit'
 import fs from 'fs'
 import ConnectionRequest from "../models/connections.model.js"
 import Post from "../models/post.model.js"
 import Comment from "../models/comments.model.js"
+import { uploadBufferToCloudinary } from '../utils/cloudinaryUpload.js'
 
 const convertUserDataToPDF = async (userData) => {
     const doc = new PDFDocument({ margin: 50 });
@@ -17,20 +17,23 @@ const convertUserDataToPDF = async (userData) => {
   
     // Header with Name and Image
     if (userData.userId?.profilePicture) {
-      const imagePath = `uploads/${userData.userId.profilePicture}`;
-
-      
+      const pic = userData.userId.profilePicture;
       try {
-        if (fs.existsSync(imagePath)) {
-          doc.image(imagePath, 400, 50, { width: 100 });
+        if (pic.startsWith('http://') || pic.startsWith('https://')) {
+          const imgRes = await fetch(pic);
+          if (imgRes.ok) {
+            const buf = Buffer.from(await imgRes.arrayBuffer());
+            doc.image(buf, 400, 50, { width: 100 });
+          }
+        } else {
+          const imagePath = `uploads/${pic}`;
+          if (fs.existsSync(imagePath)) {
+            doc.image(imagePath, 400, 50, { width: 100 });
+          }
         }
       } catch (err) {
         console.error("Error adding image:", err);
       }
-      
-
-
-
     }
   
     doc.fontSize(22).font("Helvetica-Bold").text(userData.userId.name, 50, 50);
@@ -148,7 +151,15 @@ export const uploadProfilePicture = async(req, res)=>{
 
         if(!user)return res.status(404).json({message:"User not found"})
 
-            user.profilePicture = req.file.filename;
+            if (!req.file) {
+              return res.status(400).json({ message: "No file uploaded" });
+            }
+
+            user.profilePicture = await uploadBufferToCloudinary(
+              req.file.buffer,
+              req.file.mimetype,
+              'proconnect/profiles'
+            );
 
             await user.save();
 

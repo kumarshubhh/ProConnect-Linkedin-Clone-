@@ -1,30 +1,11 @@
-import express from 'express';
 import { Router } from "express";
 import { acceptConnectionRequest, downloadProfile, getAllUserProfile, getMyConnectionsRequests, getUserAndProfile, getUserProfileAndUserBasedOnUsername,  login, register, sendConnectionRequest, updateProfileData, updateUserProfile, uploadProfilePicture, whatAreMyConnections } from "../controllers/user.controller.js";
-import multer from 'multer';
-
-
-
+import { uploadMemory } from "../middleware/memoryUpload.js";
 
 const router = Router();
 
-
-const storage = multer.diskStorage({
-  destination:(req, res, cb)=>{
-    cb(null, 'uploads/')
-  },
-  filename:(req, file,cb)=>{
-    cb(null, file.originalname)
-  }
-})
-
-
-
-
-const upload = multer({storage: storage});
-
 router.route("/update_profile_picture")
-.post(upload.single("profile_picture"), uploadProfilePicture)
+.post(uploadMemory.single("profile_picture"), uploadProfilePicture)
 
 
 router.route('/register').post(register)

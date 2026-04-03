@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import styles from './Navbar.module.css';
-import { BASE_URL } from '@/config';
+import { mediaUrl } from '@/config';
 
 export default function Navbar() {
   const router = useRouter();
@@ -41,7 +41,7 @@ export default function Navbar() {
               >
                 <img 
                   src={authState.user.userId?.profilePicture 
-                    ? `${BASE_URL}/${authState.user.userId.profilePicture}` 
+                    ? mediaUrl(authState.user.userId.profilePicture) 
                     : '/defaultProfilePicture.jpg'
                   }
                   alt="Profile"

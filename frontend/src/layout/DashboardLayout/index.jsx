@@ -1,15 +1,29 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styles from "./index.module.css"
 import { useRouter } from 'next/router'
 import { setTokenIsThere } from '@/config/redux/reducer/authReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllUsers, sendConnectionRequest } from '@/config/redux/action/authAction';
-import { BASE_URL } from '@/config';
+import { getAboutUser, getAllUsers, sendConnectionRequest } from '@/config/redux/action/authAction';
+import { mediaUrl } from '@/config';
+import { toast } from 'react-toastify';
+
+function suggestionHeadline(profile) {
+  const cp = typeof profile.currentPost === 'string' ? profile.currentPost.trim() : '';
+  if (cp) return cp;
+  const bio = typeof profile.bio === 'string' ? profile.bio.trim() : '';
+  if (bio && bio !== '') {
+    return bio.length > 72 ? `${bio.slice(0, 69)}…` : bio;
+  }
+  const u = profile.userId?.username;
+  return u ? `@${u}` : 'Member';
+}
 
 export default function DashboardLayout({children}) {
   const router = useRouter();
   const dispatch = useDispatch()
   const authState = useSelector((state) => state.auth)
+  const [connectingUserId, setConnectingUserId] = useState(null);
+  const [pendingByUserId, setPendingByUserId] = useState({});
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -18,21 +32,55 @@ export default function DashboardLayout({children}) {
         router.push("/login");
       } else {
         dispatch(setTokenIsThere());
+        dispatch(getAboutUser({ token }));
         dispatch(getAllUsers());
       }
     }
   }, []);
 
-  const handleConnect = async (userId) => {
+  const handleConnect = async (userId, displayName) => {
+    if (!userId) return;
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Please log in again.");
+      return;
+    }
+    const idKey = String(userId);
+    setConnectingUserId(idKey);
     try {
-      await dispatch(sendConnectionRequest({
-        receiver_id: userId,
-        token: localStorage.getItem("token")
-      }));
-    } catch (error) {
-      console.error("Connection request failed:", error);
+      await dispatch(
+        sendConnectionRequest({ user_id: userId, token })
+      ).unwrap();
+      setPendingByUserId((prev) => ({ ...prev, [idKey]: true }));
+      toast.success(
+        displayName
+          ? `Invitation sent to ${displayName}`
+          : "Connection request sent"
+      );
+    } catch (err) {
+      const msg =
+        (err && typeof err === "object" && err.message) ||
+        (typeof err === "string" ? err : null) ||
+        "Could not send connection request";
+      if (/already/i.test(msg)) {
+        toast.info(msg);
+        setPendingByUserId((prev) => ({ ...prev, [idKey]: true }));
+      } else {
+        toast.error(msg);
+      }
+    } finally {
+      setConnectingUserId(null);
     }
   };
+
+  const myUserId = authState.user?.userId?._id;
+
+  const peopleSuggestions = useMemo(() => {
+    const list = Array.isArray(authState.all_users) ? authState.all_users : [];
+    return list
+      .filter((p) => p.userId && (!myUserId || String(p.userId._id) !== String(myUserId)))
+      .slice(0, 5);
+  }, [authState.all_users, myUserId]);
 
   return (
     <div>
@@ -87,46 +135,113 @@ export default function DashboardLayout({children}) {
             {children}
           </div>
 
-          {/* Right Sidebar - Top Profiles */}
+          {/* Right Sidebar — People you may know (LinkedIn-style) */}
           <div className={styles.homeContainer_extraContainer}>
-            <h3>People you may know</h3>
+          <aside className={styles.pymkCard} aria-label="People you may know">
+            <div className={styles.pymkHeader}>
+              <div className={styles.pymkTitleRow}>
+                <h3 className={styles.pymkTitle}>People you may know</h3>
+                <span className={styles.pymkTitleHint} title="Suggestions based on your profile">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden>
+                    <path fillRule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16Z" />
+                    <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                  </svg>
+                </span>
+              </div>
+              <button
+                type="button"
+                className={styles.pymkSeeAll}
+                onClick={() => router.push('/Discover')}
+              >
+                See all
+              </button>
+            </div>
 
             {!authState.all_profiles_fetched ? (
-              <div style={{ textAlign: 'center', padding: '20px', color: '#5F5F5F' }}>
-                <p>Loading profiles...</p>
-              </div>
-            ) : (
-              Array.isArray(authState.all_users) && authState.all_users.length > 0 ? (
-                authState.all_users.slice(0, 5).map((profile) => (
-                  <div key={profile._id} className={styles.profileCard}>
-                    <div className={styles.profileDetails}>
-                      <img 
-                        src={profile.userId?.profilePicture 
-                          ? `${BASE_URL}/${profile.userId.profilePicture}` 
-                          : '/defaultProfilePicture.jpg'
-                        }
-                        alt={profile.userId?.name || 'User'}
-                        className={styles.profileAvatar}
-                      />
-                      <div className={styles.profileInfo}>
-                        <h4>{profile.userId?.name || 'Unknown User'}</h4>
-                        <p>@{profile.userId?.username || 'username'}</p>
-                      </div>
+              <div className={styles.pymkSkeleton}>
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className={styles.pymkSkeletonRow}>
+                    <div className={styles.pymkSkeletonAvatar} />
+                    <div className={styles.pymkSkeletonLines}>
+                      <div className={styles.pymkSkeletonLine} />
+                      <div className={styles.pymkSkeletonLineShort} />
+                      <div className={styles.pymkSkeletonBtn} />
                     </div>
-                    <button 
-                      className={styles.connectButton}
-                      onClick={() => handleConnect(profile.userId?._id)}
-                    >
-                      Connect
-                    </button>
                   </div>
-                ))
-              ) : (
-                <div style={{ textAlign: 'center', padding: '20px', color: '#5F5F5F' }}>
-                  <p>No profiles found</p>
-                </div>
-              )
+                ))}
+              </div>
+            ) : peopleSuggestions.length > 0 ? (
+              <ul className={styles.pymkList}>
+                {peopleSuggestions.map((profile) => {
+                  const username = profile.userId?.username;
+                  const name = profile.userId?.name || 'Member';
+                  return (
+                    <li key={profile._id} className={styles.pymkItem}>
+                      <div
+                        className={styles.pymkItemMain}
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => username && router.push(`/view_profile/${username}`)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            if (username) router.push(`/view_profile/${username}`);
+                          }
+                        }}
+                      >
+                        <img
+                          src={
+                            profile.userId?.profilePicture
+                              ? mediaUrl(profile.userId.profilePicture)
+                              : '/defaultProfilePicture.jpg'
+                          }
+                          alt=""
+                          className={styles.pymkAvatar}
+                        />
+                        <div className={styles.pymkText}>
+                          <p className={styles.pymkName}>{name}</p>
+                          <p className={styles.pymkHeadline}>{suggestionHeadline(profile)}</p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        className={`${styles.pymkConnectBtn} ${
+                          connectingUserId === String(profile.userId?._id)
+                            ? styles.pymkConnectBtnLoading
+                            : ''
+                        } ${
+                          pendingByUserId[String(profile.userId?._id)]
+                            ? styles.pymkConnectBtnPending
+                            : ''
+                        }`}
+                        disabled={
+                          connectingUserId === String(profile.userId?._id) ||
+                          pendingByUserId[String(profile.userId?._id)]
+                        }
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleConnect(profile.userId?._id, name);
+                        }}
+                      >
+                        {connectingUserId === String(profile.userId?._id) ? (
+                          <>
+                            <span className={styles.pymkBtnSpinner} aria-hidden />
+                            <span>Sending…</span>
+                          </>
+                        ) : pendingByUserId[String(profile.userId?._id)] ? (
+                          'Pending'
+                        ) : (
+                          'Connect'
+                        )}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p className={styles.pymkEmpty}>No suggestions right now. Try Discover to find people.</p>
             )}
+          </aside>
           </div>
         </div>
       </div>

@@ -72,97 +72,311 @@
 }
 
 /* ===================================
-   RIGHT SIDEBAR - TOP PROFILES
+   RIGHT SIDEBAR — People you may know
    =================================== */
 
 .homeContainer_extraContainer {
   position: sticky;
   top: 80px;
   height: fit-content;
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  align-self: start;
 }
 
-.homeContainer_extraContainer h3 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #1C1C1C;
-  margin: 0 0 16px 0;
-}
-
-.profileCard {
-  padding: 12px;
+/* Card shell — LinkedIn-like panel */
+.pymkCard {
+  background: #fff;
   border-radius: 8px;
-  margin-bottom: 8px;
-  transition: all 0.2s ease;
-  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.02),
+    0 2px 12px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
 }
 
-.profileCard:hover {
-  background: #F3F2EF;
+.pymkHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #ebebeb;
+  background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
 }
 
-.profileDetails {
+.pymkTitleRow {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
+  min-width: 0;
 }
 
-.profileAvatar {
-  width: 48px;
-  height: 48px;
+.pymkTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.9);
+  margin: 0;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.pymkTitleHint {
+  display: flex;
+  color: rgba(0, 0, 0, 0.45);
+  flex-shrink: 0;
+}
+
+.pymkTitleHint svg {
+  width: 14px;
+  height: 14px;
+}
+
+.pymkSeeAll {
+  border: none;
+  background: none;
+  padding: 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666666;
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 4px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.pymkSeeAll:hover {
+  color: #0a66c2;
+  background: rgba(10, 102, 194, 0.06);
+}
+
+.pymkList {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 8px;
+}
+
+.pymkItem {
+  padding: 10px 16px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.15s ease;
+}
+
+.pymkItem:last-child {
+  border-bottom: none;
+}
+
+.pymkItem:hover {
+  background: #f9fafb;
+}
+
+.pymkItemMain {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 6px;
+  margin: -4px -6px 8px;
+  padding: 4px 6px;
+  outline: none;
+}
+
+.pymkItemMain:focus-visible {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #0a66c2;
+}
+
+.pymkAvatar {
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #E4E6EB;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.profileInfo {
+.pymkText {
   flex: 1;
   min-width: 0;
 }
 
-.profileInfo h4 {
+.pymkName {
   font-size: 14px;
   font-weight: 600;
-  color: #1C1C1C;
-  margin: 0 0 2px 0;
-  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.9);
+  margin: 0 0 4px;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.profileInfo p {
+.pymkName:hover {
+  color: #0a66c2;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+.pymkHeadline {
   font-size: 12px;
-  color: #5F5F5F;
+  line-height: 1.35;
+  color: rgba(0, 0, 0, 0.6);
   margin: 0;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.connectButton {
-  background: transparent;
-  border: 1px solid #0A66C2;
-  color: #0A66C2;
-  padding: 6px 16px;
-  border-radius: 16px;
-  font-size: 13px;
+.pymkConnectBtn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 24px;
+  border: 1.5px solid #0a66c2;
+  background: #fff;
+  color: #0a66c2;
+  font-size: 15px;
   font-weight: 600;
+  letter-spacing: 0.01em;
   cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 }
 
-.connectButton:hover {
-  background: rgba(10, 102, 194, 0.08);
+.pymkConnectBtn:hover {
+  background: rgba(10, 102, 194, 0.06);
   border-color: #004182;
+  color: #004182;
+  box-shadow: 0 2px 4px rgba(10, 102, 194, 0.12);
 }
 
-.connectButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.pymkConnectBtn:active {
+  transform: scale(0.99);
+}
+
+.pymkConnectBtn:disabled {
+  cursor: default;
+}
+
+.pymkConnectBtnLoading {
+  pointer-events: none;
+  opacity: 0.92;
+  gap: 8px;
+}
+
+.pymkConnectBtnPending {
+  border-color: rgba(0, 0, 0, 0.15);
+  color: rgba(0, 0, 0, 0.55);
+  background: #f3f2ef;
+  box-shadow: none;
+}
+
+.pymkConnectBtnPending:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+  color: rgba(0, 0, 0, 0.55);
+  background: #f3f2ef;
+  transform: none;
+}
+
+.pymkBtnSpinner {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border: 2px solid rgba(10, 102, 194, 0.2);
+  border-top-color: #0a66c2;
+  border-radius: 50%;
+  animation: pymkBtnSpin 0.65s linear infinite;
+}
+
+@keyframes pymkBtnSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pymkEmpty {
+  margin: 0;
+  padding: 20px 16px 24px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(0, 0, 0, 0.55);
+  text-align: center;
+}
+
+/* Loading skeleton */
+.pymkSkeleton {
+  padding: 8px 16px 16px;
+}
+
+.pymkSkeletonRow {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pymkSkeletonRow:last-child {
+  border-bottom: none;
+}
+
+.pymkSkeletonAvatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+  background-size: 200% 100%;
+  animation: pymkShimmer 1.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.pymkSkeletonLines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.pymkSkeletonLine,
+.pymkSkeletonLineShort {
+  height: 10px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+  background-size: 200% 100%;
+  animation: pymkShimmer 1.2s ease-in-out infinite;
+}
+
+.pymkSkeletonLine {
+  width: 85%;
+}
+
+.pymkSkeletonLineShort {
+  width: 55%;
+}
+
+.pymkSkeletonBtn {
+  height: 36px;
+  border-radius: 24px;
+  margin-top: 4px;
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+  background-size: 200% 100%;
+  animation: pymkShimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes pymkShimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }
 
 /* ===================================

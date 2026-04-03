@@ -7,7 +7,7 @@ const postSchema = mongoose.Schema({
     },
     body: {
         type: String,
-        required: true
+        default: '',
     },
     likes: {
         type: Number,  // Number for like count

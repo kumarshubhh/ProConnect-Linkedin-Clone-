@@ -1,4 +1,4 @@
-import { BASE_URL } from '@/config'
+import { mediaUrl } from '@/config'
 import { getAllUsers } from '@/config/redux/action/authAction'
 import DashbordLayout from '@/layout/DashboardLayout'
 import UserLayout from '@/layout/userLayout'
@@ -39,7 +39,7 @@ useEffect(() =>{
     >
       <img 
         className={style.userCard_img} 
-        src={`${BASE_URL}/${user.userId.profilePicture}`} 
+        src={mediaUrl(user.userId.profilePicture)} 
         alt={user.userId.name || 'User'} 
       />
       <div>
